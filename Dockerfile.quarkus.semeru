@@ -1,0 +1,12 @@
+FROM restcrud-semeru-base
+
+COPY pidplus.sh /app/pidplus.sh
+COPY restore.sh /app/restore.sh
+RUN chmod +x restore.sh
+RUN chmod +x pidplus.sh
+
+COPY startQuarkus.sh /app/startQuarkus.sh
+RUN chmod +x startQuarkus.sh
+RUN ./startQuarkus.sh
+
+CMD ["bash", "startQuarkus.sh"]

@@ -1,0 +1,26 @@
+version: "3.9"
+
+networks:
+  my-net:
+
+services:
+  post-gres:
+    container_name: pgdocker
+    networks: 
+      - my-net
+    build:
+      context: ./postgres/
+      dockerfile: Dockerfile
+    ports:
+      - "5432:5432" 
+
+  rest-crud:
+    container_name: rest-crud
+    networks: 
+      - my-net
+    build: 
+      dockerfile: Dockerfile
+    ports:
+      - "9080:9080"
+    environment:
+      - POSTGRES_HOST=pgdocker

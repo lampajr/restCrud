@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="OpenLiberty Microprofile Server">
+  <featureManager>
+    <feature>restfulWS-3.0</feature>
+    <feature>persistence-3.0</feature>
+    <feature>jsonb-2.0</feature>
+  </featureManager>
+
+  <library id="postgres">
+	  <fileset dir="${shared.resource.dir}/postgres" includes="postgresql-42.2.5.jar"/>
+  </library>
+
+  <variable name="POSTGRES_HOST" defaultValue="localhost" />
+  
+  <dataSource id="DefaultDataSource">
+    <jdbcDriver libraryRef="postgres" />
+    <properties databaseName="rest-crud" user="restcrud" password="restcrud"
+      serverName="${POSTGRES_HOST}" portNumber="5432" />
+  </dataSource>
+
+  <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9444">
+    <httpOptions maxKeepAliveRequests="-1" />
+  </httpEndpoint>
+
+  <cdi12 enableImplicitBeanArchives="false" />
+  
+  <webApplication contextRoot="crud" location="rest-crud.war" deferServletLoad="false">
+    <classloader>
+      <privateLibrary>
+        <fileset dir="${shared.resource.dir}" includes="postgresql-42.2.5.jar" />
+      </privateLibrary>
+    </classloader>
+  </webApplication>
+
+  <keyStore id="defaultKeyStore" password="{xor}Lz4sLCgwLTs=" />
+</server>

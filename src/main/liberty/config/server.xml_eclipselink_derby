@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="OpenLiberty Microprofile Server">
+  <featureManager>
+    <feature>restfulWS-3.0</feature>
+    <feature>persistence-3.0</feature>
+    <feature>jsonb-2.0</feature>
+  </featureManager>
+
+  <variable name="derby.lib" defaultValue="${shared.resource.dir}/derby/derby-10.14.2.0.jar" />
+  
+  <!-- Derby Library Configuration -->    
+   <library id="derbyJDBCLib">
+     <file name="${derby.lib}" />
+   </library>
+   
+   <!--<authData id="TradeDataSourceAuthData" password="db_password" user="db_username" />
+   <authData id="TradeAdminAuthData" password="db_password" user="db_username" />-->
+
+   <connectionManager agedTimeout="-1" connectionTimeout="0" id="conMgr1" maxIdleTime="-1" maxPoolSize="100" minPoolSize="100" purgePolicy="FailingConnectionOnly" reapTime="-1" />  
+   <dataSource connectionManagerRef="conMgr1" id="DefaultDataSource" isolationLevel="TRANSACTION_READ_COMMITTED"  jndiName="jdbc/TradeDataSource" statementCacheSize="60">
+      <jdbcDriver libraryRef="derbyJDBCLib" />
+      <properties.derby.embedded databaseName="${shared.resource.dir}/data/tradedb" createDatabase="create" />
+   </dataSource>
+
+  <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9444">
+    <httpOptions maxKeepAliveRequests="-1" />
+  </httpEndpoint>
+
+  <cdi12 enableImplicitBeanArchives="false" />
+  
+  <webApplication contextRoot="crud" location="rest-crud.war" deferServletLoad="false">
+    <classloader>
+      <privateLibrary>
+        <fileset dir="${shared.resource.dir}" includes="postgresql-42.2.5.jar" />
+      </privateLibrary>
+    </classloader>
+  </webApplication>
+
+  <keyStore id="defaultKeyStore" password="{xor}Lz4sLCgwLTs=" />
+</server>

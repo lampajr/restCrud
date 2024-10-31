@@ -1,0 +1,20 @@
+# Set the maximum heap size to 1024m.
+#-Xmx128m
+#-Xms128m
+-Xms1g
+-Xmx1g
+#-Xmn768m
+#-Xshareclasses:none
+#-agentlib:jprof=scs,LOGPATH=/opt/PI-2020/Dpiperf/bin/logs,LOGPREFIX=log
+#-agentlib:jprof=scs,start,scs_rate=1000,LOGPATH=/opt/PI-2020/Dpiperf/bin/logs,LOGPREFIX=log
+#-agentlib:jprof=tprof,LOGPATH=/opt/PI-2020/Dpiperf/bin/logs,LOGPREFIX=log
+#-agentlib:jprof=scs=monitor_contended_entered+,LOGPATH=/opt/PI-2020/Dpiperf/bin/logs,LOGPREFIX=log
+#-Xverbosegclog:./logs/verbosegc.%seq.log,25,10000
+#-Xgc:maxScavengeBeforeGlobal=200
+##-verbose
+#-Dorg.jboss.weld.xml.disableValidating=true
+#-agentlib:jprof=scs,start,scs_rate=1000,logpath=/opt/pingperf/pi
+#-Xjit:unleashStaticFieldFolding
+#-Xverify:none
+#-XX:-StackTraceInThrowable
+#-Xgcthreads6

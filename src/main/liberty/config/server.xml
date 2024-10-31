@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="OpenLiberty Microprofile Server">
+    <featureManager>
+        <feature>microProfile-5.0</feature>
+        <feature>restfulWS-3.0</feature>
+        <feature>persistenceContainer-3.0</feature>
+        <feature>jsonb-2.0</feature>
+        <feature>bells-1.0</feature>
+    </featureManager>
+
+    <jpa defaultPersistenceProvider="org.hibernate.jpa.HibernatePersistenceProvider"></jpa>
+
+    <logging consoleFormat="simple"  maxFiles="10"/>
+    <monitor  filter="REST"/>
+
+    <library id="postgres">
+	    <fileset dir="${shared.resource.dir}/postgres" includes="postgresql-42.2.5.jar"/>
+    </library>
+
+    <variable name="POSTGRES_HOST" defaultValue="localhost" />
+
+    <dataSource id="DefaultDataSource" jndiName="DefaultDataSource" >
+        <jdbcDriver libraryRef="postgres"/>
+        <properties databaseName="rest-crud" user="restcrud" password="restcrud" portNumber="5432" serverName="${POSTGRES_HOST}"/>
+    </dataSource>
+
+    <library id="hibernate">
+        <file name="${shared.resource.dir}/hibernate/hibernate-5.5.2-liberty-jakarta-jars/antlr-2.7.7.jar"/>
+        <file name="${shared.resource.dir}/hibernate/hibernate-5.5.2-liberty-jakarta-jars/byte-buddy-1.10.22.jar"/>
+        <file name="${shared.resource.dir}/hibernate/hibernate-5.5.2-liberty-jakarta-jars/classmate-1.5.1.jar"/>
+        <file name="${shared.resource.dir}/hibernate/hibernate-5.5.2-liberty-jakarta-jars/dom4j-2.1.3.jar"/>
+        <file name="${shared.resource.dir}/hibernate/hibernate-5.5.2-liberty-jakarta-jars/hibernate-commons-annotations-5.1.2.Final.jar"/>
+        <file name="${shared.resource.dir}/hibernate/hibernate-5.5.2-liberty-jakarta-jars/hibernate-core-jakarta-5.5.2.Final.jar"/>
+        <file name="${shared.resource.dir}/hibernate/hibernate-5.5.2-liberty-jakarta-jars/jandex-2.2.3.Final.jar"/>
+	    <file name="${shared.resource.dir}/hibernate/hibernate-5.5.2-liberty-jakarta-jars/javassist-3.27.0-GA.jar"/>
+        <file name="${shared.resource.dir}/hibernate/hibernate-5.5.2-liberty-jakarta-jars/jaxb-runtime-3.0.0.jar"/>
+        <file name="${shared.resource.dir}/hibernate/hibernate-5.5.2-liberty-jakarta-jars/jboss-logging-3.4.2.Final.jar"/>
+    </library>
+    <bell libraryRef="hibernate"/>
+
+    <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9443">
+      <httpOptions maxKeepAliveRequests="-1" />
+    </httpEndpoint>
+    <cdi12 enableImplicitBeanArchives="false"/>
+    <webApplication contextRoot="crud" location="rest-crud.war" deferServletLoad="false">
+        <classloader commonLibraryRef="hibernate"/>
+    </webApplication>
+
+</server>

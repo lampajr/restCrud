@@ -13,6 +13,7 @@ quarkus.datasource.jdbc.url=jdbc:postgresql://10.16.112.12:5432/rest-crud
 ```
 
 ## Building Semeru Images
+First, insert the security token into the .env file. (You can ask me for it).
 ```
 ./build.semeru.sh
 ```

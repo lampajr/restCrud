@@ -31,7 +31,7 @@ do
 
   #use docker inspect to get start time
   time2=$(podman inspect ${CID} | grep StartedAt | awk '{print $2}'| awk '{gsub("\"", " "); print $1}'| awk '{gsub("T"," "); print}'|awk '{print substr($0, 1, length($0)-6)}')
-  time2="$time2 EDT"
+  time2="$time2 $( date "+%z")"
   #echo "start time"
   echo $time2
   echo $FR_TIME

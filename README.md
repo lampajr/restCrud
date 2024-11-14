@@ -94,7 +94,13 @@ Example:
 ./run_restCrud.sh /opt/apache-jmeter-5.6.3 checkers06.rtp.raleigh.ibm.com
 ```
 
-The throughput measurement is the summary number of the last 5:00 run. (17600.3 below)
+There is also another option that adds some wait time between JMETER calls. This makes it easier to acheive 30% CPU. This script requires the desired number of JMETER threads to be passed in also.
+```
+./run_restCrud_waittime.sh /opt/apache-jmeter-5.6.3 checkers06.rtp.raleigh.ibm.com 20
+```
+
+The throughput measurement is the summary number of the last 5:00 run (The last summary = line of the last run). (17600.3 below)
+```
 ```
 summary = 3159447 in 00:05:00 = 17600.3/s Avg:     5 Min:     0 Max:    70 Err:     0 (0.00%)
 ```
